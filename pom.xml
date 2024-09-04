@@ -5,7 +5,7 @@
 	
 	<groupId>daluai.lib</groupId>
 	<artifactId>services-parent</artifactId>
-	<version>2.0.0</version>
+	<version>2.1.0</version>
 	
 	<description>Services definition</description>
 	<properties>
@@ -30,6 +30,12 @@
            <groupId>org.springframework</groupId>
            <artifactId>spring-webmvc</artifactId>
            <version>6.1.4</version>
+           <scope>compile</scope>
+       </dependency>
+      <dependency>
+           <groupId>org.apache.tomcat.embed</groupId>
+           <artifactId>tomcat-embed-core</artifactId>
+           <version>10.1.26</version>
            <scope>compile</scope>
        </dependency>
 
