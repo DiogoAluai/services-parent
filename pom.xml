@@ -13,6 +13,13 @@
 		<maven.compiler.target>17</maven.compiler.target>
    </properties>
 
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+
    <dependencies>
 	   <dependency>
 		   <groupId>junit</groupId>
@@ -34,24 +41,48 @@
        </dependency>
 
        <dependency>
-           <groupId>daluai.lib</groupId>
+           <groupId>com.github.DiogoAluai</groupId>
            <artifactId>registry-api</artifactId>
            <version>3.0.0</version>
            <scope>compile</scope>
        </dependency>
        <dependency>
-           <groupId>daluai.lib</groupId>
+           <groupId>com.github.DiogoAluai</groupId>
            <artifactId>registry-client</artifactId>
            <version>2.0.0</version>
        </dependency>
    </dependencies>
 
 
-   <build>
-		<plugins>
-		<!--  You might need maven-assembly-plugin for jar with dependencies if you want a main class with dependencies -->
-		</plugins>
-	</build>
-
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.8.0</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.3.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
