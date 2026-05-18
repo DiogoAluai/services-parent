@@ -1,6 +1,7 @@
 package daluai.lib.services_parent;
 
 
+import org.jspecify.annotations.NonNull;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -19,7 +20,7 @@ public abstract class DaluaiServiceRestController {
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
-            public void addCorsMappings(CorsRegistry registry) {
+            public void addCorsMappings(@NonNull CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedOrigins("*")
                         .allowedMethods("*")
