@@ -38,10 +38,7 @@ public abstract class RegisteringService {
 
     public RegisteringService(String name) {
         validateChildClassAnnotations();
-        String privateIp = LocalIpProbe.firstActiveIPv4Address();
-        String port = Optional.ofNullable(System.getProperty("port.for.registry"))
-                .orElseThrow(() -> new IllegalArgumentException("Property 'port.for.registry' must be provided"));
-        this.url = buildUrl(privateIp, port);
+        this.url = probeOurLocalUrl();
         registerService(new Service(
                 name,
                 url,
@@ -82,10 +79,7 @@ public abstract class RegisteringService {
         setUnregisterShutdownHook(service);
         EXECUTOR_SERVICE.scheduleAtFixedRate(() -> {
             // private ip may change, so let's check now and then and keep registry updated
-            String newPrivateIp = LocalIpProbe.firstActiveIPv4Address();
-            String port = Optional.ofNullable(System.getProperty("port.for.registry"))
-                    .orElseThrow(() -> new IllegalArgumentException("Property 'port.for.registry' must be provided"));
-            String newUrl = buildUrl(newPrivateIp, port);
+            String newUrl = probeOurLocalUrl();
             if (!url.equals(newUrl)) {
                 LOG.info("IP address has changed from {} to {}", url, newUrl);
                 url = newUrl;
@@ -98,6 +92,13 @@ public abstract class RegisteringService {
                 LOG.info("Private ip unchanged: {}", url);
             }
         }, 1, 1, TimeUnit.HOURS);
+    }
+
+    private String probeOurLocalUrl() {
+        String privateIp = LocalIpProbe.firstActiveIPv4Address();
+        String port = Optional.ofNullable(System.getProperty("port.for.registry"))
+                .orElseThrow(() -> new IllegalArgumentException("Property 'port.for.registry' must be provided"));
+        return buildUrl(privateIp, port);
     }
     /**
      * Set deregister hook to be called on shutdown.
